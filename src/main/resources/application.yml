@@ -9,6 +9,6 @@ spring:
     open-in-view: false
     database-platform: org.hibernate.dialect.MySQLDialect
     hibernate:
-      ddl-auto: none
+      ddl-auto: validate
   liquibase:
     change-log: classpath:db/changelog/db.changelog-master.xml
