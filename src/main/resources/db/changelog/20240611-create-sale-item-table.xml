@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.10.xsd">
+
+    <changeSet id="create_sale_item_table" author="Kakan">
+        <preConditions onFail="MARK_RAN">
+            <not>
+                <tableExists tableName="sale_item"/>
+                <foreignKeyConstraintExists foreignKeyName="fk_sale_item_sale_id"/>
+                <foreignKeyConstraintExists foreignKeyName="fk_sale_item_product_id"/>
+            </not>
+        </preConditions>
+        <createTable tableName="sale_item">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="sale_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="product_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="quantity" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="unit_price" type="decimal(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="total_price" type="decimal(10,2)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="sale_item" baseColumnNames="sale_id"
+                                 constraintName="fk_sale_item_sale_id" referencedTableName="sale"
+                                 referencedColumnNames="id" onDelete="CASCADE"/>
+        <addForeignKeyConstraint baseTableName="sale_item" baseColumnNames="product_id"
+                                 constraintName="fk_sale_item_product_id" referencedTableName="product"
+                                 referencedColumnNames="id" onDelete="CASCADE"/>
+    </changeSet>
+
+</databaseChangeLog>

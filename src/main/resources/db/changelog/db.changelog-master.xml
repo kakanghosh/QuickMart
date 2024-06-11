@@ -3,4 +3,10 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+    <include file="classpath:db/changelog/20240611-create-customer-table.xml" relativeToChangelogFile="false" />
+    <include file="classpath:db/changelog/20240611-create-product-table.xml" relativeToChangelogFile="false" />
+    <include file="classpath:db/changelog/20240611-create-wish-list-table.xml" relativeToChangelogFile="false" />
+    <include file="classpath:db/changelog/20240611-create-wish-list-item-table.xml" relativeToChangelogFile="false" />
+    <include file="classpath:db/changelog/20240611-create-sale-table.xml" relativeToChangelogFile="false" />
+    <include file="classpath:db/changelog/20240611-create-sale-item-table.xml" relativeToChangelogFile="false" />
 </databaseChangeLog>
