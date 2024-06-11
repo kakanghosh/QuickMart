@@ -18,7 +18,7 @@
                 <constraints nullable="false"/>
             </column>
             <column name="email" type="varchar(255)">
-                <constraints nullable="false"/>
+                <constraints unique="true" nullable="false"/>
             </column>
             <column name="created_at" type="timestamp">
                 <constraints nullable="false"/>
