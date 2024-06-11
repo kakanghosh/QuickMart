@@ -9,4 +9,5 @@
     <include file="classpath:db/changelog/20240611-create-wish-list-item-table.xml" relativeToChangelogFile="false" />
     <include file="classpath:db/changelog/20240611-create-sale-table.xml" relativeToChangelogFile="false" />
     <include file="classpath:db/changelog/20240611-create-sale-item-table.xml" relativeToChangelogFile="false" />
+    <include file="classpath:db/changelog/20240611-seed-initial-data.xml" relativeToChangelogFile="false" />
 </databaseChangeLog>
