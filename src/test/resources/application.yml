@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: QuickMart
+  datasource:
+    url: jdbc:mysql://localhost:3306/quick_mart_db
+    username: quick_mart_db_user
+    password: a1643af38034caaa687ae9e12f68dc6d
+  jpa:
+    open-in-view: false
+    database-platform: org.hibernate.dialect.MySQLDialect
+    hibernate:
+      ddl-auto: none
+  liquibase:
+    change-log: classpath:db/changelog/db.changelog-master.xml
