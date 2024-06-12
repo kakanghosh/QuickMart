@@ -15,14 +15,19 @@ public class SaleItem {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(nullable = false)
     private Long saleId;
 
+    @Column(nullable = false)
     private Long productId;
 
+    @Column(nullable = false)
     private Integer quantity;
 
+    @Column(nullable = false)
     private BigDecimal unitPrice;
 
+    @Column(nullable = false)
     private BigDecimal totalPrice;
 
     public Long getId() {

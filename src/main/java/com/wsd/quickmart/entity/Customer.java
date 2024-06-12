@@ -15,11 +15,23 @@ public class Customer {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String email;
 
+    @Column(nullable = false)
     private LocalDateTime createdAt;
+
+    public Customer() {
+    }
+
+    public Customer(String name, String email, LocalDateTime createdAt) {
+        this.name = name;
+        this.email = email;
+        this.createdAt = createdAt;
+    }
 
     public Long getId() {
         return id;

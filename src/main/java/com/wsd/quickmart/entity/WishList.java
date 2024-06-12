@@ -15,9 +15,19 @@ public class WishList {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(nullable = false)
     private Long customerId;
-    
+
+    @Column(nullable = false)
     private LocalDateTime createdAt;
+
+    public WishList() {
+    }
+
+    public WishList(Long customerId, LocalDateTime createdAt) {
+        this.customerId = customerId;
+        this.createdAt = createdAt;
+    }
 
     public Long getId() {
         return id;

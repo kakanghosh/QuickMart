@@ -13,9 +13,19 @@ public class WishListItem {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(nullable = false)
     private Long wishListId;
 
+    @Column(nullable = false)
     private Long productId;
+
+    public WishListItem() {
+    }
+
+    public WishListItem(Long wishListId, Long productId) {
+        this.wishListId = wishListId;
+        this.productId = productId;
+    }
 
     public Long getId() {
         return id;

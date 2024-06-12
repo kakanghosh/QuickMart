@@ -16,10 +16,13 @@ public class Sale {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(nullable = false)
     private Long customerId;
 
+    @Column(nullable = false)
     private LocalDateTime saleDate;
 
+    @Column(nullable = false)
     private BigDecimal totalAmount;
 
     public Long getId() {

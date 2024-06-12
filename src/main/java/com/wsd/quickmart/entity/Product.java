@@ -15,11 +15,23 @@ public class Product {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Column(nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String description;
 
+    @Column(nullable = false)
     private BigDecimal price;
+
+    public Product(String name, String description, BigDecimal price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
+
+    public Product() {
+    }
 
     public Long getId() {
         return id;
