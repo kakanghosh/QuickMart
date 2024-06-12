@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/wish-lists")
 public class RestControllerWishList {
     private static final Logger logger = LoggerFactory.getLogger(RestControllerWishList.class);
     private final WishListService wishListService;
@@ -20,7 +20,7 @@ public class RestControllerWishList {
         this.wishListService = wishListService;
     }
 
-    @GetMapping("wish-lists/{customerId}")
+    @GetMapping("{customerId}")
     public ResponseEntity<WishListResponse> getWishListByCustomerId(@PathVariable Long customerId) {
         logger.info("::WishListByCustomerId:: Customer ID: {}", customerId);
         var wishList = wishListService.getWithListByCustomerId(customerId);

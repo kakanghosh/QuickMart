@@ -17,7 +17,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1/sales")
 public class RestControllerSale {
     private static final Logger logger = LoggerFactory.getLogger(RestControllerSale.class);
     private final SaleService saleService;
@@ -26,14 +26,14 @@ public class RestControllerSale {
         this.saleService = saleService;
     }
 
-    @GetMapping("sales/total/today")
+    @GetMapping("total/today")
     public ResponseEntity<SaleResponse> getTotalSaleAmountOfToday() {
         var optionalSaleOfDay = saleService.getTotalSaleAmountOfToday();
         return optionalSaleOfDay.map(bigDecimal -> ResponseEntity.ok(new SaleResponse(bigDecimal)))
                                 .orElseGet(() -> ResponseEntity.ok(new SaleResponse(BigDecimal.ZERO)));
     }
 
-    @GetMapping("sales/max")
+    @GetMapping("max")
     public ResponseEntity<SalesSummaryResponse> getMaxSaleDayOfTimeRange(@RequestParam String startDate, @RequestParam String endDate) {
         logger.info("::MaxSaleDayOfTimeRange:: Start date: {}, End date: {}", startDate, endDate);
         var optionalMaxSale = saleService.getMaxSaleDayOfTimeRange(LocalDate.parse(startDate), LocalDate.parse(endDate));
@@ -41,13 +41,13 @@ public class RestControllerSale {
                               .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
-    @GetMapping("sales/top5")
+    @GetMapping("top5")
     public ResponseEntity<TopSellingItemResponse> getTopSellingItemsOfAllTime() {
         var top5Sales = saleService.getTop5SellingItemsOfAllTimeBasedOnSaleAmount();
         return ResponseEntity.ok(new TopSellingItemResponse(top5Sales));
     }
 
-    @GetMapping("sales/last-month/top5")
+    @GetMapping("last-month/top5")
     public ResponseEntity<TopSellingItemResponse> getTopSellingItemsOfLastMonth() {
         var top5Sales = saleService.getTop5SellingItemsOfLastMonthBasedOnNumberOfSales();
         return ResponseEntity.ok(new TopSellingItemResponse(top5Sales));
