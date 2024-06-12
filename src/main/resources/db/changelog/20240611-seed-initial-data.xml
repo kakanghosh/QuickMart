@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <databaseChangeLog
-        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.10.xsd">
 
-    <changeSet id="seed_customer_table" author="Kakan">
+    <changeSet id="seed_customer_table" author="Kakan" context="prod">
         <sql>
             INSERT INTO customer (name, email, created_at)
             VALUES
@@ -14,7 +14,7 @@
             ('Bob Brown', 'bob@example.com', now());
         </sql>
     </changeSet>
-    <changeSet id="seed_product_table" author="Kakan">
+    <changeSet id="seed_product_table" author="Kakan" context="prod">
         <sql>
             INSERT INTO product (name, description, price) VALUES
             ('Product A', 'Description for Product A', 10.25),
@@ -24,7 +24,7 @@
             ('Product E', 'Description for Product E', 15.75);
         </sql>
     </changeSet>
-    <changeSet id="seed_wish_list_table" author="Kakan">
+    <changeSet id="seed_wish_list_table" author="Kakan" context="prod">
         <preConditions onFail="CONTINUE">
             <sqlCheck expectedResult="3">SELECT COUNT(*) FROM customer WHERE id IN (1,2,3)</sqlCheck>
         </preConditions>
@@ -35,7 +35,7 @@
             (3, '2024-06-12 14:15:00');
         </sql>
     </changeSet>
-    <changeSet id="seed_wish_list_item_table" author="Kakan">
+    <changeSet id="seed_wish_list_item_table" author="Kakan" context="prod">
         <preConditions onFail="CONTINUE">
             <sqlCheck expectedResult="3">SELECT COUNT(*) FROM wish_list WHERE id IN (1,2,3)</sqlCheck>
             <sqlCheck expectedResult="3">SELECT COUNT(*) FROM product WHERE id IN (1,2,3)</sqlCheck>
@@ -51,7 +51,7 @@
             (3, 3);
         </sql>
     </changeSet>
-    <changeSet id="seed_sale_table" author="Kakan">
+    <changeSet id="seed_sale_table" author="Kakan" context="prod">
         <preConditions onFail="CONTINUE">
             <sqlCheck expectedResult="3">SELECT COUNT(*) FROM customer WHERE id IN (1,2,3)</sqlCheck>
         </preConditions>
@@ -69,7 +69,7 @@
             (3, '2024-04-10 10:00:00', 669.75);
         </sql>
     </changeSet>
-    <changeSet id="seed_sale_item_table" author="Kakan">
+    <changeSet id="seed_sale_item_table" author="Kakan" context="prod">
         <preConditions onFail="CONTINUE">
             <sqlCheck expectedResult="10">SELECT COUNT(*) FROM sale WHERE id IN (1,2,3,4,5,6,7,8,9,10)</sqlCheck>
             <sqlCheck expectedResult="5">SELECT COUNT(*) FROM product WHERE id IN (1,2,3,4,5)</sqlCheck>
