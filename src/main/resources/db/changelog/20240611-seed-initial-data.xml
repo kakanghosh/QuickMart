@@ -4,7 +4,7 @@
         xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.10.xsd">
 
-    <changeSet id="seed_customer_table" author="Kakan" context="prod">
+    <changeSet id="seed_customer_table" author="Kakan" context="prod,test">
         <sql>
             INSERT INTO customer (name, email, created_at)
             VALUES
@@ -14,7 +14,7 @@
             ('Bob Brown', 'bob@example.com', now());
         </sql>
     </changeSet>
-    <changeSet id="seed_product_table" author="Kakan" context="prod">
+    <changeSet id="seed_product_table" author="Kakan" context="prod,test">
         <sql>
             INSERT INTO product (name, description, price) VALUES
             ('Product A', 'Description for Product A', 10.25),
