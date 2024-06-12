@@ -30,6 +30,17 @@ public class SaleItem {
     @Column(nullable = false)
     private BigDecimal totalPrice;
 
+    public SaleItem() {
+    }
+
+    public SaleItem(Long saleId, Long productId, Integer quantity, BigDecimal unitPrice) {
+        this.saleId = saleId;
+        this.productId = productId;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.totalPrice = unitPrice.multiply(new BigDecimal(quantity));
+    }
+
     public Long getId() {
         return id;
     }
