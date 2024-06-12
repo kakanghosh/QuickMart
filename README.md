@@ -19,31 +19,10 @@ Make sure you are in the root directory.
 mvn clean package -DskipTests=true
 ```
 
-### 2. Build the Docker Image
-
-Next, you need to build the Docker image for your application.
-Make sure you are in the root directory of
-your project (where the Dockerfile is located) and run the following command:
-
-```
-docker build -f Dockerfile-slim -t quickmart:PUT_YOUR_TAG .
-Example: 
-docker build -f Dockerfile-slim -t quickmart:2024-06-12-23-35 .
-```
-
-### 3. Update image tag in docker compose file
-
-Next, in docker compose file update the newly build image tag for quickmart service.
-
-```
-Example:
-image: quickmart:2024-06-12-23-35
-```
-
-### 4. Run docker compose file
+### 2. Run docker compose file
 
 Finally, run the docker compose command to start the application
 
 ```
-docker compose up
+docker compose up --build
 ```
