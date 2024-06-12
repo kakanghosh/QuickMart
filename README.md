@@ -31,7 +31,7 @@ Example:
 docker build -f Dockerfile-slim -t quickmart:2024-06-12-23-35 .
 ```
 
-### 3. Update image tag docker compose file
+### 3. Update image tag in docker compose file
 
 Next, in docker compose file update the newly build image tag for quickmart service.
 
