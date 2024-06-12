@@ -6,6 +6,7 @@ import com.wsd.quickmart.repository.WishListItemRepository;
 import com.wsd.quickmart.repository.WishListRepository;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -21,7 +22,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import static io.restassured.RestAssured.given;
-import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class RestControllerWishListTest {
@@ -57,11 +57,13 @@ class RestControllerWishListTest {
     @BeforeEach
     void setUp() {
         RestAssured.baseURI = "http://localhost:" + port;
+        wishListRepository.deleteAll();
+        wishListItemRepository.deleteAll();
     }
 
     @Test
     void shouldGetWishListByCustomerId() {
-        var wishList = wishListRepository.save(new WishList(1L, LocalDateTime.now().minusDays(1)));
+        var wishList = wishListRepository.save(new WishList(1L, LocalDateTime.now()));
         wishListItemRepository.saveAll(List.of(
                 new WishListItem(wishList.getId(), 1L),
                 new WishListItem(wishList.getId(), 2L)
@@ -72,7 +74,18 @@ class RestControllerWishListTest {
                 .pathParams("customerId", 1)
                 .get("/api/v1/wish-lists/{customerId}")
                 .then()
+                .log().all()
                 .statusCode(200)
-                .body(matchesJsonSchemaInClasspath("schema/wish-list.json"));
+                .assertThat()
+                .body("products", Matchers.notNullValue())
+                .body("products.size()", Matchers.equalTo(2))
+                .body("products[0].id", Matchers.equalTo(1))
+                .body("products[0].name", Matchers.equalTo("Product A"))
+                .body("products[0].description", Matchers.equalTo("Description for Product A"))
+                .body("products[0].price", Matchers.equalTo(10.25f))
+                .body("products[1].id", Matchers.equalTo(2))
+                .body("products[1].name", Matchers.equalTo("Product B"))
+                .body("products[1].description", Matchers.equalTo("Description for Product B"))
+                .body("products[1].price", Matchers.equalTo(20.50f));
     }
 }
