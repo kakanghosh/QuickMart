@@ -34,7 +34,7 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
                                                        @Param("endDate") LocalDate endDate);
 
     @Query("""
-            SELECT new com.wsd.quickmart.dto.TopSellingItemDTO(p.id, p.name, SUM(si.totalPrice) AS salesPrice)
+            SELECT new com.wsd.quickmart.dto.TopSellingItemDTO(p.id, p.name, sum(si.quantity), SUM(si.totalPrice) AS salesPrice)
             FROM SaleItem si
             JOIN Product p ON p.id = si.productId
             GROUP BY p.id
@@ -42,4 +42,14 @@ public interface SaleRepository extends JpaRepository<Sale, Long> {
             """)
     List<TopSellingItemDTO> findTopSellingItemsOfAllTime(Pageable pageable);
 
+    @Query("""
+            SELECT new com.wsd.quickmart.dto.TopSellingItemDTO(p.id, p.name, SUM(si.quantity) AS totalQuantity, SUM(si.totalPrice))
+            FROM Sale s
+            JOIN SaleItem si ON si.saleId = s.id
+            JOIN Product p ON p.id = si.productId
+            WHERE FUNCTION('DATE_FORMAT', s.saleDate, '%Y-%m-01') = FUNCTION('DATE_FORMAT', :expectedDate, '%Y-%m-01')
+            GROUP BY p.id
+            ORDER BY totalQuantity DESC
+            """)
+    List<TopSellingItemDTO> findTopSellingItemsOfLastMonth(@Param("expectedDate") LocalDate expectedDate, Pageable pageable);
 }

@@ -2,6 +2,7 @@ package com.wsd.quickmart.repository;
 
 import com.wsd.quickmart.entity.Sale;
 import com.wsd.quickmart.entity.SaleItem;
+import org.assertj.core.api.AssertionsForClassTypes;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -111,5 +112,34 @@ class SaleRepositoryTest {
         assertThat(top5Selling.get(0).productId()).isEqualTo(productB.get().getId());
         assertThat(top5Selling.get(1).productId()).isEqualTo(productC.get().getId());
         assertThat(top5Selling.get(2).productId()).isEqualTo(productA.get().getId());
+    }
+
+    @Test
+    void shouldFindTopSellingItemsOfLastMonth() {
+        saleRepository.saveAll(List.of(
+                new Sale(1L, LocalDateTime.of(2024, 6, 8, 2, 2), new BigDecimal("250.00")),
+                new Sale(2L, LocalDateTime.of(2024, 6, 8, 2, 2), new BigDecimal("300.25")),
+                new Sale(3L, LocalDateTime.of(2024, 6, 10, 2, 2), new BigDecimal("300.25"))
+        ));
+        var sales = saleRepository.findAll();
+        var productA = productRepository.findById(1L);
+        var productB = productRepository.findById(2L);
+        var productC = productRepository.findById(3L);
+        saleItemRepository.saveAll(List.of(
+                new SaleItem(sales.get(0).getId(), productA.get().getId(), 2, productA.get().getPrice()),
+                new SaleItem(sales.get(0).getId(), productB.get().getId(), 5, productB.get().getPrice()),
+
+                new SaleItem(sales.get(1).getId(), productB.get().getId(), 5, productB.get().getPrice()),
+                new SaleItem(sales.get(1).getId(), productA.get().getId(), 6, productA.get().getPrice()),
+                new SaleItem(sales.get(1).getId(), productC.get().getId(), 2, productC.get().getPrice()),
+
+                new SaleItem(sales.get(2).getId(), productB.get().getId(), 5, productB.get().getPrice()),
+                new SaleItem(sales.get(2).getId(), productC.get().getId(), 4, productC.get().getPrice())
+        ));
+        var top5Sales = saleRepository.findTopSellingItemsOfLastMonth(LocalDate.of(2024, 6, 12), Pageable.ofSize(5));
+        assertThat(top5Sales).isNotEmpty();
+        AssertionsForClassTypes.assertThat(top5Sales.get(0).productId()).isEqualTo(productB.get().getId());
+        AssertionsForClassTypes.assertThat(top5Sales.get(1).productId()).isEqualTo(productA.get().getId());
+        AssertionsForClassTypes.assertThat(top5Sales.get(2).productId()).isEqualTo(productC.get().getId());
     }
 }
