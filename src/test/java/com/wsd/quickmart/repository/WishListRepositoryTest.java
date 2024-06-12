@@ -6,7 +6,6 @@ import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.DynamicPropertyRegistry;
@@ -23,9 +22,6 @@ import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 class WishListRepositoryTest {
 
     public static MySQLContainer<?> mySQLContainer = new MySQLContainer<>("mysql:8.0-debian");
-
-    @Value("${spring.application.database.name}")
-    String databaseName;
 
     @Autowired
     private WishListRepository wishListRepository;
