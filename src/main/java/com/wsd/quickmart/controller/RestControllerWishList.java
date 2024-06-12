@@ -18,7 +18,7 @@ public class RestControllerWishList {
         this.wishListService = wishListService;
     }
 
-    @GetMapping("wish-list/{customerId}")
+    @GetMapping("wish-lists/{customerId}")
     public ResponseEntity<WishListResponse> getWishListByCustomerId(@PathVariable Long customerId) {
         var wishList = wishListService.getWithListByCustomerId(customerId);
         return ResponseEntity.ok(new WishListResponse(wishList));

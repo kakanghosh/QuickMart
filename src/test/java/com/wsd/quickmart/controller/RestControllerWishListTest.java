@@ -70,7 +70,7 @@ class RestControllerWishListTest {
                 .contentType(ContentType.JSON)
                 .when()
                 .pathParams("customerId", 1)
-                .get("/api/v1/wish-list/{customerId}")
+                .get("/api/v1/wish-lists/{customerId}")
                 .then()
                 .statusCode(200)
                 .body(matchesJsonSchemaInClasspath("schema/wish-list.json"));
