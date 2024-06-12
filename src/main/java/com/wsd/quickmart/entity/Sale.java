@@ -25,6 +25,15 @@ public class Sale {
     @Column(nullable = false)
     private BigDecimal totalAmount;
 
+    public Sale() {
+    }
+
+    public Sale(Long customerId, LocalDateTime saleDate, BigDecimal totalAmount) {
+        this.customerId = customerId;
+        this.saleDate = saleDate;
+        this.totalAmount = totalAmount;
+    }
+
     public Long getId() {
         return id;
     }
