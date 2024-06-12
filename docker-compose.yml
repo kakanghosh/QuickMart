@@ -6,13 +6,28 @@ services:
     ports:
       - '3306:3306'
     environment:
-      MYSQL_ROOT_PASSWORD: : ROOT_PASSWORD
-      MYSQL_DATABASE: DATABASE_NAME
-      MYSQL_USER: DATABASE_USER_NAME
-      MYSQL_PASSWORD: DATABASE_PASSWORD
+      MYSQL_ROOT_PASSWORD: 30e0166717fb1790be50c908438a5509
+      MYSQL_DATABASE: quick_mart_db
+      MYSQL_USER: quick_mart_db_user
+      MYSQL_PASSWORD: a1643af38034caaa687ae9e12f68dc6d
     volumes:
       - mysql_data:/var/lib/mysql
-
+  #  quickmart:
+  #    build: .
+  #    ports:
+  #      - "8080:8080"
+  #    environment:
+  #      - DATABASE_URL=jdbc:mysql://mysql:3306/quick_mart_db
+  #      - DATABASE_USERNAME=quick_mart_db_user
+  #      - DATABASE_PASSWORD=a1643af38034caaa687ae9e12f68dc6d
+  quickmart:
+    image: quickmart:2024-06-12-23-35
+    ports:
+      - "8080:8080"
+    environment:
+      - DATABASE_URL=jdbc:mysql://mysql:3306/quick_mart_db
+      - DATABASE_USERNAME=quick_mart_db_user
+      - DATABASE_PASSWORD=a1643af38034caaa687ae9e12f68dc6d
 volumes:
   mysql_data:
     driver: local
