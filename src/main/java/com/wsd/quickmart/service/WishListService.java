@@ -4,6 +4,6 @@ import com.wsd.quickmart.dto.ProductDTO;
 
 import java.util.List;
 
-sealed public interface WishListService permits WishListServiceImpl {
+public interface WishListService {
     List<ProductDTO> getWithListByCustomerId(Long customerId);
 }
