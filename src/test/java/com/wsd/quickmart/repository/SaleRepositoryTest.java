@@ -46,8 +46,8 @@ class SaleRepositoryTest {
 
     @Test
     void shouldGetTotalSaleAmountByDateZero() {
-        var totalSaleAmountOfCurrentDay = saleRepository.getTotalSaleAmountByDate(LocalDate.now());
-        assertThat(totalSaleAmountOfCurrentDay.amount()).isEqualTo(BigDecimal.ZERO);
+        var optionalSaleAmount = saleRepository.getTotalSaleAmountByDate(LocalDate.now());
+        assertThat(optionalSaleAmount.isEmpty()).isTrue();
     }
 
     @Test
@@ -56,8 +56,23 @@ class SaleRepositoryTest {
                 new Sale(1L, LocalDateTime.of(2024, 5, 2, 2, 2), new BigDecimal("250.00")),
                 new Sale(2L, LocalDateTime.of(2024, 5, 2, 2, 2), new BigDecimal("300.25"))
         ));
-        var totalSaleAmountOfCurrentDay = saleRepository.getTotalSaleAmountByDate(LocalDate.of(2024, 5, 2));
-        assertThat(totalSaleAmountOfCurrentDay.amount()).isGreaterThan(BigDecimal.ZERO);
-        assertThat(totalSaleAmountOfCurrentDay.amount()).isEqualTo(new BigDecimal("550.25"));
+        var optionalCurrentDaySale = saleRepository.getTotalSaleAmountByDate(LocalDate.of(2024, 5, 2));
+        assertThat(optionalCurrentDaySale.isPresent()).isTrue();
+        assertThat(optionalCurrentDaySale.get()).isEqualTo(new BigDecimal("550.25"));
+    }
+
+    @Test
+    void shouldFindMaxSaleDayOfTimeRange() {
+        saleRepository.saveAll(List.of(
+                new Sale(1L, LocalDateTime.of(2024, 6, 8, 2, 2), new BigDecimal("250.00")),
+                new Sale(2L, LocalDateTime.of(2024, 6, 8, 2, 2), new BigDecimal("300.25")),
+                new Sale(2L, LocalDateTime.of(2024, 6, 10, 2, 2), new BigDecimal("300.25"))
+        ));
+        var startDate = LocalDate.of(2024, 6, 8);
+        var endDate = LocalDate.of(2024, 6, 12);
+        var optionalSalesSummary = saleRepository.findMaxSaleDayOfTimeRange(startDate, endDate);
+        assertThat(optionalSalesSummary.isPresent()).isTrue();
+        assertThat(optionalSalesSummary.get().saleDate()).isEqualTo(LocalDate.of(2024, 6, 8));
+        assertThat(optionalSalesSummary.get().totalSales()).isEqualTo(new BigDecimal("550.25"));
     }
 }
