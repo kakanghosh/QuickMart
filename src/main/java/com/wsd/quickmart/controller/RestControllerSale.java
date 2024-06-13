@@ -29,14 +29,15 @@ public class RestControllerSale {
     @GetMapping("total/today")
     public ResponseEntity<SaleResponse> getTotalSaleAmountOfToday() {
         var optionalSaleOfDay = saleService.getTotalSaleAmountOfToday();
+        logger.info("::TotalSaleAmountOfToday:: {}", optionalSaleOfDay.orElse(BigDecimal.ZERO));
         return optionalSaleOfDay.map(bigDecimal -> ResponseEntity.ok(new SaleResponse(bigDecimal)))
                                 .orElseGet(() -> ResponseEntity.ok(new SaleResponse(BigDecimal.ZERO)));
     }
 
     @GetMapping("max")
     public ResponseEntity<SalesSummaryResponse> getMaxSaleDayOfTimeRange(@RequestParam String startDate, @RequestParam String endDate) {
-        logger.info("::MaxSaleDayOfTimeRange:: Start date: {}, End date: {}", startDate, endDate);
         var optionalMaxSale = saleService.getMaxSaleDayOfTimeRange(LocalDate.parse(startDate), LocalDate.parse(endDate));
+        logger.info("::MaxSaleDayOfTimeRange:: Start date: {}, End date: {}, Sale: {}", startDate, endDate, optionalMaxSale);
         return optionalMaxSale.map(summaryDTO -> ResponseEntity.ok(new SalesSummaryResponse(summaryDTO)))
                               .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
@@ -44,12 +45,14 @@ public class RestControllerSale {
     @GetMapping("top5")
     public ResponseEntity<TopSellingItemResponse> getTopSellingItemsOfAllTime() {
         var top5Sales = saleService.getTop5SellingItemsOfAllTimeBasedOnSaleAmount();
+        logger.info("::TopSellingItemsOfAllTime:: {}", top5Sales);
         return ResponseEntity.ok(new TopSellingItemResponse(top5Sales));
     }
 
     @GetMapping("last-month/top5")
     public ResponseEntity<TopSellingItemResponse> getTopSellingItemsOfLastMonth() {
         var top5Sales = saleService.getTop5SellingItemsOfLastMonthBasedOnNumberOfSales();
+        logger.info("::TopSellingItemsOfLastMonth:: {}", top5Sales);
         return ResponseEntity.ok(new TopSellingItemResponse(top5Sales));
     }
 }

@@ -22,8 +22,8 @@ public class RestControllerWishList {
 
     @GetMapping("{customerId}")
     public ResponseEntity<WishListResponse> getWishListByCustomerId(@PathVariable Long customerId) {
-        logger.info("::WishListByCustomerId:: Customer ID: {}", customerId);
         var wishList = wishListService.getWithListByCustomerId(customerId);
+        logger.info("::WishListByCustomerId:: Customer ID: {}, wishList: {}", customerId, wishList);
         return ResponseEntity.ok(new WishListResponse(wishList));
     }
 }
