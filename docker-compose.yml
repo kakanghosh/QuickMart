@@ -28,15 +28,6 @@ services:
       - DATABASE_URL=jdbc:mysql://mysql:3306/quick_mart_db
       - DATABASE_USERNAME=quick_mart_db_user
       - DATABASE_PASSWORD=a1643af38034caaa687ae9e12f68dc6d
-  filebeat:
-    build:
-      context: .
-      dockerfile: Dockerfile-filebeat
-    container_name: filebeat
-    volumes:
-      - logs:/app/logs
-    depends_on:
-      - quickmart
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.13.2
     container_name: elasticsearch
@@ -48,6 +39,20 @@ services:
       - "9200:9200"
     volumes:
       - esdata:/usr/share/elasticsearch/data
+  filebeat:
+    build:
+      context: .
+      dockerfile: Dockerfile-filebeat
+    container_name: filebeat
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+      - ELASTIC_USERNAME=elastic
+      - ELASTIC_PASSWORD=62be9d2b8db86e359af6115ae5184e3d
+    volumes:
+      - logs:/app/logs
+    depends_on:
+      - quickmart
+      - elasticsearch
   kibana:
     image: docker.elastic.co/kibana/kibana:7.13.2
     container_name: kibana
@@ -59,8 +64,5 @@ services:
       - elasticsearch
 volumes:
   logs:
-    driver: local
   esdata:
-    driver: local
   mysql_data:
-    driver: local

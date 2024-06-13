@@ -5,6 +5,6 @@ filebeat.inputs:
       - /app/logs/*.log
 
 output.elasticsearch:
-  hosts: [ "http://elasticsearch:9200" ]
-  username: "elastic"
-  password: "62be9d2b8db86e359af6115ae5184e3d"
+  hosts: [ "${ELASTICSEARCH_HOSTS}" ]
+  username: "${ELASTIC_USERNAME}"
+  password: "${ELASTIC_PASSWORD}"
