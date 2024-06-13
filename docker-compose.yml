@@ -21,7 +21,7 @@ services:
     ports:
       - "8080:8080"
     volumes:
-      - logs:/app/logs
+      - quick_mart_data:/app/quick_mart/logs
     depends_on:
       - mysql
     environment:
@@ -49,7 +49,7 @@ services:
       - ELASTIC_USERNAME=elastic
       - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
     volumes:
-      - logs:/app/logs
+      - quick_mart_data:/app/quick_mart/logs
     depends_on:
       - quickmart
       - elasticsearch
@@ -63,6 +63,6 @@ services:
     depends_on:
       - elasticsearch
 volumes:
-  logs:
+  quick_mart_data:
   esdata:
   mysql_data:

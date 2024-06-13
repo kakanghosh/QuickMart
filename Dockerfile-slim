@@ -1,8 +1,8 @@
 FROM openjdk:21-ea-30-slim-bullseye
 
-WORKDIR /app
+WORKDIR /app/quick_mart
 
-COPY /target/quick-mart-0.0.1-SNAPSHOT.jar /app/quick-mart.jar
+COPY /target/quick-mart-0.0.1-SNAPSHOT.jar /app/quick_mart/quick-mart.jar
 
 EXPOSE 8080
 

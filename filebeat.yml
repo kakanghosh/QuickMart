@@ -1,10 +1,18 @@
 filebeat.inputs:
   - type: log
     enabled: true
+    fields:
+      type: quick_mart
     paths:
-      - /app/logs/*.log
+      - /app/quick_mart/logs/*.log
+
+setup.ilm.enabled: false
+setup.template.name: "app-%{[fields.type]:other}"
+setup.template.pattern: "app-%{[fields.type]:other}-*"
 
 output.elasticsearch:
   hosts: [ "${ELASTICSEARCH_HOSTS}" ]
   username: "${ELASTIC_USERNAME}"
   password: "${ELASTIC_PASSWORD}"
+  protocol: "http"
+  index: "app-%{[fields.type]:other}-%{+yyyy.MM.dd}"
