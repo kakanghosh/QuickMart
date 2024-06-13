@@ -4,7 +4,7 @@ This guide provides instructions on how to build and run your QuickMart applicat
 
 ## Prerequisites
 
-- Maven 3.6+ and Java 17
+- Maven 3.6+ and Java 21
 - Docker installed on your machine
 - Docker Compose installed on your machine
 
