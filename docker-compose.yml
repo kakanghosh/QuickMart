@@ -6,10 +6,10 @@ services:
     ports:
       - '3306:3306'
     environment:
-      MYSQL_ROOT_PASSWORD: 30e0166717fb1790be50c908438a5509
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
       MYSQL_DATABASE: quick_mart_db
       MYSQL_USER: quick_mart_db_user
-      MYSQL_PASSWORD: a1643af38034caaa687ae9e12f68dc6d
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
     volumes:
       - mysql_data:/var/lib/mysql
   quickmart:
@@ -27,14 +27,14 @@ services:
     environment:
       - DATABASE_URL=jdbc:mysql://mysql:3306/quick_mart_db
       - DATABASE_USERNAME=quick_mart_db_user
-      - DATABASE_PASSWORD=a1643af38034caaa687ae9e12f68dc6d
+      - DATABASE_PASSWORD=${MYSQL_PASSWORD}
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.13.2
     container_name: elasticsearch
     environment:
       - discovery.type=single-node
       - ELASTIC_USERNAME=elastic
-      - ELASTIC_PASSWORD=62be9d2b8db86e359af6115ae5184e3d
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
     ports:
       - "9200:9200"
     volumes:
@@ -47,7 +47,7 @@ services:
     environment:
       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
       - ELASTIC_USERNAME=elastic
-      - ELASTIC_PASSWORD=62be9d2b8db86e359af6115ae5184e3d
+      - ELASTIC_PASSWORD=${ELASTIC_PASSWORD}
     volumes:
       - logs:/app/logs
     depends_on:
