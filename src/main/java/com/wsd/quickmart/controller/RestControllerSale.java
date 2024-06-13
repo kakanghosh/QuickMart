@@ -19,7 +19,7 @@ import java.time.LocalDate;
 @RestController
 @RequestMapping("/api/v1/sales")
 public class RestControllerSale {
-    private static final Logger logger = LoggerFactory.getLogger(RestControllerSale.class);
+    private static final Logger logger = LoggerFactory.getLogger("sales-report");
     private final SaleService saleService;
 
     public RestControllerSale(SaleService saleService) {
